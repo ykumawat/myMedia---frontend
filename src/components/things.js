@@ -10,6 +10,8 @@ class Things {
     this.thingsForm = document.getElementById('new-thing-form')
     this.thingInput = document.getElementById('new-thing-body')
     this.thingsNode = document.getElementById('things-container')
+    this.songsNode = document.getElementById('songs-container')
+    this.podcastsNode = document.getElementById('podcasts-container')
     this.thingsForm.addEventListener('submit',this.handleAddThing.bind(this))
     this.thingsNode.addEventListener('click',this.handleDeleteThing.bind(this))
   }
@@ -48,6 +50,27 @@ class Things {
   }
 
   render() {
-    this.thingsNode.innerHTML = `<ul>${this.thingsHTML()}</ul>`
+  //   debugger
+  //   if(this.kind === "podcast"){
+  //     this.podcastsNode.innerHTML = `<ul>${this.thingsHTML()}</ul>`
+  //   } else if (this.kind === "song"){
+  //     this.songsNode.innerHTML = `<ul>${this.thingsHTML()}</ul>`
+  //   } else {
+  //     this.thingsNode.innerHTML = `<ul>${this.thingsHTML()}</ul>`
+  //   }
+  //
+    let objs = this
+    this.things.filter(function(thing) {
+      if (thing.kind.includes("song")) {
+
+        objs.songsNode.innerHTML = `<ul>${thing.title}</ul>`
+
+      } else {
+        objs.podcastsNode.innerHTML = `<ul>${thing.title}</ul>`
+      }
+    })
+
   }
+
+
 }

@@ -2,6 +2,7 @@ class Thing {
   constructor(thingJSON) {
     this.title = thingJSON.title
     this.id = thingJSON.id
+    this.kind = thingJSON.kind
   }
 
   render() {
