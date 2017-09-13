@@ -27,7 +27,7 @@ class Users {
     var foundUser = this.users.find(function(el) {
       return el.name.toLowerCase() === username.toLowerCase()
     })
-    console.log(foundUser.user_thing)
+
     // see if the username exists in the database, if not, alert user and create new user in database
   }
 
