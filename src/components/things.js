@@ -6,14 +6,12 @@ class Things {
     this.initBindingsAndEventListeners()
     this.adapter = new ThingsAdapter()
     this.fetchAndLoadThings()
-    
+
   }
 
 
   initBindingsAndEventListeners() {
     //console.log(this)
-    this.loginForm = document.getElementById('login-id')
-    this.loginInput = document.getElementById('user-name')
     this.thingsForm = document.getElementById('new-thing-form')
     this.thingInput = document.getElementById('new-thing-title')
     this.thingsNode = document.getElementById('things-container')
@@ -24,10 +22,12 @@ class Things {
     this.favesContainer = document.getElementById('favez-container')
     //this.thingsForm.addEventListener('submit',this.handleAddThing.bind(this))
     //this.thingsNode.addEventListener('click',this.handleDeleteThing.bind(this))
-    this.thingInput.addEventListener('keyup', this.filterThings.bind(this))
     this.allMediaDIv.addEventListener('click', this.addToFaves.bind(this))
     this.favesContainer.addEventListener('click', this.deleteFromFaves.bind(this))
+    this.thingInput.addEventListener('keyup', this.filterThings.bind(this))
   }
+
+
 
   deleteFromFaves(){
     if(event.target.className === "em em-broken_heart"){
@@ -43,47 +43,29 @@ class Things {
         return el.id.toString() === event.target.dataset.id.toString()
       })
       this.favesContainer.innerHTML += `<ul>${foundThing.title}<button id="button-unfave" data-id= ${foundThing.id} class= "em em-broken_heart"></button></ul>`
-
-      
       // console.log("hello")
     }
-    
     //debugger
   }
-
-
 
   filterThings(){
     this.songsNode.innerHTML = ""
     this.podcastsNode.innerHTML = ""
-
     const searchInput = event.target.value
-
     console.log(this.things)
     //let foundArr = []
-    
-    
     const filteredArray = this.things.filter(function(instance){
-        
         for(var key in instance){
               if(instance[key].toString().toLowerCase().includes(searchInput.toLowerCase()) && searchInput !== ""){
-
                   return instance
-              }  
+              }
             }
-
         })
-
       this.renderFilteredArray(filteredArray)
-
-
     }
 
-    
-
-
   fetchAndLoadThings() {
-    
+
     this.adapter.getThings()
     .then( thingsJSON => thingsJSON.forEach( thing => this.things.push( new Thing(thing) )))
       // .then( this.render.bind(this) )
@@ -91,11 +73,7 @@ class Things {
       //console.log(this)
   }
 
-
-
   renderFilteredArray(something) {
-  
-    
     //console.log(this)
     something.map(thing => {
     //console.log(this)
