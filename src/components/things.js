@@ -6,12 +6,17 @@ class Things {
     this.initBindingsAndEventListeners()
     this.adapter = new ThingsAdapter()
     this.fetchAndLoadThings()
-
   }
+
+  // static loadCurrentUser(user) {
+  //   this.currentUser = user
+  //   //use this.currentUser.things to access the current user's things associations
+  // }
 
 
   initBindingsAndEventListeners() {
     //console.log(this)
+
     this.thingsForm = document.getElementById('new-thing-form')
     this.thingInput = document.getElementById('new-thing-title')
     this.thingsNode = document.getElementById('things-container')
@@ -22,12 +27,18 @@ class Things {
     this.favesContainer = document.getElementById('favez-container')
     //this.thingsForm.addEventListener('submit',this.handleAddThing.bind(this))
     //this.thingsNode.addEventListener('click',this.handleDeleteThing.bind(this))
+
     this.allMediaDIv.addEventListener('click', this.addToFaves.bind(this))
     this.favesContainer.addEventListener('click', this.deleteFromFaves.bind(this))
     this.thingInput.addEventListener('keyup', this.filterThings.bind(this))
   }
 
+  findOrCreateUser() {
+    event.preventDefault()
+    let username = this.loginInput.value
 
+    // see if the username exists in the database, if not, alert user and create new user in database
+  }
 
   deleteFromFaves(){
     if(event.target.className === "em em-broken_heart"){
@@ -37,14 +48,16 @@ class Things {
   }
 
   addToFaves() {
+    var foundThing
     if(event.target.className === "em em-heart"){
-      var foundThing = this.things.find(function(el){
+      foundThing = this.things.find(function(el){
 
         return el.id.toString() === event.target.dataset.id.toString()
       })
       this.favesContainer.innerHTML += `<ul>${foundThing.title}<button id="button-unfave" data-id= ${foundThing.id} class= "em em-broken_heart"></button></ul>`
       // console.log("hello")
     }
+    console.log(app.user);
     //debugger
   }
 
@@ -52,7 +65,7 @@ class Things {
     this.songsNode.innerHTML = ""
     this.podcastsNode.innerHTML = ""
     const searchInput = event.target.value
-    console.log(this.things)
+    // console.log(this.things)
     //let foundArr = []
     const filteredArray = this.things.filter(function(instance){
         for(var key in instance){

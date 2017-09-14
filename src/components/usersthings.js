@@ -15,8 +15,9 @@ class UsersThings {
   }
 
   render() {
-    console.log("hello");
-    console.log(this.usersthings)
+
   }
+
+
 
 }

@@ -4,8 +4,8 @@ class UsersAdapter {
     this.userThingsUrl = 'http://localhost:3000/api/v1/users/showusersthings'
   }
 
-  getUsers() {
-    return fetch(this.baseUrl).then(response => response.json())
+  getUser(username) {
+    return fetch(this.baseUrl + "?q=" + username ).then(response => response.json())
   }
 
   getUserThings() {
@@ -21,6 +21,19 @@ class UsersAdapter {
       }
     }
     return fetch(deleteUrl, userThingsDeleteParams).then(response => response.json())
+  }
+
+  addThingsToUser() {
+    const editThingsForUser = `${this.baseUrl}/${app.user.id}`
+    const userThingsAddParams = {
+      method: 'PATCH',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type':'application/json'
+      },
+      body: JSON.stringify()
+    }
+    return fetch(editThingsForUser, userThingsAddParams).then(response => response.json())
   }
 
   createUser(body) {
