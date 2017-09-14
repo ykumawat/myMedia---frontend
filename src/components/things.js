@@ -57,8 +57,8 @@ class Things {
       this.favesContainer.innerHTML += `<ul>${foundThing.title}<button id="button-unfave" data-id= ${foundThing.id} class= "em em-broken_heart"></button></ul>`
       // console.log("hello")
     }
-    console.log(app.user);
-    //debugger
+    app.user.things.push(foundThing)
+    this.adapter.addThingsToUser(foundThing)
   }
 
   filterThings(){

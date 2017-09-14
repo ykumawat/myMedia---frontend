@@ -1,7 +1,7 @@
 class App {
   constructor() {
     this.things = new Things()
-    this.usersthings = new UsersThings()
+    // this.usersthings = new UsersThings()
     this.adapter = new UsersAdapter()
     this.initBindingsAndEventListeners()
   }
@@ -21,13 +21,17 @@ class App {
        this.findOrCreateUser(this.user)
       })
        // .then( this.render.bind(this) )
-       .catch( (e) => console.log(e) )
+       .catch( (e) => this.findOrCreateUser(this.user) )
        //console.log(this)
       //  this.findOrCreateUser(this.user)
    }
 
   findOrCreateUser(user) {
-    alert(`Welcome, ${this.user.name}!`)
+    if (!this.user){
+      alert ("Sorry, we couldn't find you in our database. We'll make a new user profile now!")
+    } else {
+      alert(`Welcome, ${this.user.name}!`)
+    }
     // see if the username exists in the database, if not, alert user and create new user in database
 
   }

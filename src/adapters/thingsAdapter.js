@@ -1,11 +1,25 @@
 class ThingsAdapter {
   constructor() {
     this.baseUrl = 'http://localhost:3000/api/v1/things'
+    this.userThingsUrl = 'http://localhost:3000/api/v1/users'
   }
 
   getThings() {
     return fetch(this.baseUrl).then(response => response.json())
   }
+
+    addThingsToUser(thing) {
+      const editThingsForUser = `${this.userThingsUrl}/${app.user.id}`
+      const userThingsAddParams = {
+        method: 'PATCH',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type':'application/json'
+        },
+        body: JSON.stringify({"things": thing})
+      }
+      return fetch(editThingsForUser, userThingsAddParams).then(response => response.json())
+    }
 
   deleteThing(thingId) {
     const deleteUrl = `${this.baseUrl}/${thingId}`
