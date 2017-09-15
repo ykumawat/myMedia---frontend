@@ -22,12 +22,13 @@ class ThingsAdapter {
     }
 
   deleteThing(thingId) {
-    const deleteUrl = `${this.baseUrl}/${thingId}`
+    const deleteUrl = `${this.userThingsUrl}/${app.user.id}`
     const thingDeleteParams = {
       method: 'DELETE',
       headers: {
         'Content-Type':'application/json'
-      }
+      },
+      body: JSON.stringify({"thingid": thingId})
     }
     return fetch(deleteUrl, thingDeleteParams).then(response => response.json())
   }
@@ -44,3 +45,9 @@ class ThingsAdapter {
   }
 
 }
+
+
+// products = Product.find(x)
+// special = products.specials.find(y)
+//
+// products.specials.delete(special)

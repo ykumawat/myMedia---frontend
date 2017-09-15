@@ -29,7 +29,7 @@ class Things {
     //this.thingsNode.addEventListener('click',this.handleDeleteThing.bind(this))
 
     this.allMediaDIv.addEventListener('click', this.addToFaves.bind(this))
-    this.favesContainer.addEventListener('click', this.deleteFromFaves.bind(this))
+    // this.favesContainer.addEventListener('click', this.deleteFromFaves.bind(this))
     this.thingInput.addEventListener('keyup', this.filterThings.bind(this))
   }
 
@@ -40,26 +40,43 @@ class Things {
     // see if the username exists in the database, if not, alert user and create new user in database
   }
 
-  deleteFromFaves(){
-    if(event.target.className === "em em-broken_heart"){
-      console.log("what it is")
-    }
-
-  }
+  // deleteFromFaves(){
+  //   if(event.target.className === "em em-broken_heart"){
+  //     console.log("what it is")
+  //   }
+  //
+  // }
 
   addToFaves() {
     var foundThing
+    var favContainer = this.favesContainer
+    var adapter = this.adapter
     if(event.target.className === "em em-heart"){
       foundThing = this.things.find(function(el){
-
         return el.id.toString() === event.target.dataset.id.toString()
       })
+      if(app.user.things.length > 0 ){
+        // app.user.things.forEach(function(thing){
+          let newFound = app.user.things.find(function(thing){
+          return thing.id.toString() === foundThing.id.toString()
+            })
+          if(newFound === undefined){
+            favContainer.innerHTML += `<ul>${foundThing.title}<button id="button-unfave" data-id= ${foundThing.id} class= "em em-broken_heart"></button></ul>`
+            app.user.things.push(foundThing)
+            adapter.addThingsToUser(foundThing)
+
+          }else{
+            alert("You already have that item saved to your favorites!")
+
+          }
+        }else{
       this.favesContainer.innerHTML += `<ul>${foundThing.title}<button id="button-unfave" data-id= ${foundThing.id} class= "em em-broken_heart"></button></ul>`
       // console.log("hello")
+      app.user.things.push(foundThing)
+      this.adapter.addThingsToUser(foundThing)
+      }
     }
-    // if(app.user.things.includes(foundThing))
-    app.user.things.push(foundThing)
-    this.adapter.addThingsToUser(foundThing)
+
   }
 
   filterThings(){
@@ -92,11 +109,11 @@ class Things {
     something.map(thing => {
     //console.log(this)
       if (thing.kind.includes("song")) {
-        this.songsNode.innerHTML = `<ul>${thing.title}<button id="button-fave" data-id= ${thing.id} class= "em em-heart"></button></ul>`
+        this.songsNode.innerHTML += `<ul>${thing.title}<button id="button-fave" data-id= ${thing.id} class= "em em-heart"></button></ul>`
       } else if(thing.kind.includes("podcast")) {
-        this.podcastsNode.innerHTML = `<ul>${thing.title}<button id="button-fave" data-id= ${thing.id} class= "em em-heart"></button></ul>`
+        this.podcastsNode.innerHTML += `<ul>${thing.title}<button id="button-fave" data-id= ${thing.id} class= "em em-heart"></button></ul>`
       } else {
-        this.thingsNode.innerHTML = `<ul>${thing.title}<button id="button-fave" data-id= ${thing.id} class= "em em-heart"></button></ul>`
+        this.thingsNode.innerHTML += `<ul>${thing.title}<button id="button-fave" data-id= ${thing.id} class= "em em-heart"></button></ul>`
       }
     })
     // return a new string of HTML rendered to a certain point on the page
@@ -143,3 +160,10 @@ class Things {
   // render() {
   //   this.thingsNode.innerHTML = `<ul>${this.thingsHTML()}</ul>`
   // }
+
+//   alert("You already have that item saved to your favorites!")
+//   return "hello"
+// }else{
+//   favContainer.innerHTML += `<ul>${foundThing.title}<button id="button-unfave" data-id= ${foundThing.id} class= "em em-broken_heart"></button></ul>`
+//   app.user.things.push(foundThing)
+//   adapter.addThingsToUser(foundThing)

@@ -3,6 +3,7 @@ class App {
     this.things = new Things()
     // this.usersthings = new UsersThings()
     this.adapter = new UsersAdapter()
+    this.thingAdapter = new ThingsAdapter()
     this.initBindingsAndEventListeners()
   }
 
@@ -11,6 +12,7 @@ class App {
     this.loginInput = document.getElementById('user-name')
     this.favesContainer = document.getElementById('favez-container')
     this.loginForm.addEventListener('submit', this.fetchAndLoadUser.bind(this))
+    this.favesContainer.addEventListener('click',this.deleteFromFaves.bind(this))
   }
 
   fetchAndLoadUser() {
@@ -49,6 +51,30 @@ class App {
     })
     // const template =
     // this.favesContainer.innerHTML += `<ul>${foundThing.title}<button id="button-unfave" data-id= ${foundThing.id} class= "em em-broken_heart"></button></ul>`
+  }
+
+
+
+  deleteFromFaves(){
+    console.log(event)
+    if(event.target.className === "em em-broken_heart"){
+      console.log("u hit delete button")
+      let thingID = event.target.dataset.id
+      event.target.parentElement.remove()
+
+      let foundThing = this.user.things.find(function(el){
+        return el.id.toString() === event.target.dataset.id.toString()
+      })
+
+      let index = this.user.things.indexOf(foundThing);
+      this.user.things.splice(index, 1)
+
+
+
+      this.user.things
+      this.thingAdapter.deleteThing(thingID)
+      // this.user.things
+    }
   }
 
 }
