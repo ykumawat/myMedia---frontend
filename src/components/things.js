@@ -27,11 +27,13 @@ class Things {
     this.favesContainer = document.getElementById('favez-container')
     this.songsHeading = document.getElementById('heading-songs')
     this.podcastsHeading = document.getElementById('heading-podcasts')
+    this.omegaContainer = document.getElementById('omega-container')
     //this.thingsForm.addEventListener('submit',this.handleAddThing.bind(this))
     //this.thingsNode.addEventListener('click',this.handleDeleteThing.bind(this))
     this.allMediaDIv.addEventListener('click', this.addToFaves.bind(this))
     // this.favesContainer.addEventListener('click', this.deleteFromFaves.bind(this))
     this.thingInput.addEventListener('keyup', this.filterThings.bind(this))
+    this.omegaContainer.addEventListener('hover', this.renderMoreInfo.bind(this))
   }
 
   findOrCreateUser() {
@@ -41,12 +43,11 @@ class Things {
     // see if the username exists in the database, if not, alert user and create new user in database
   }
 
-  // deleteFromFaves(){
-  //   if(event.target.className === "em em-broken_heart"){
-  //     console.log("what it is")
-  //   }
-  //
-  // }
+  renderMoreInfo(){
+    console.log(event)
+  }
+
+
 
   addToFaves() {
     var foundThing
@@ -62,7 +63,13 @@ class Things {
           return thing.id.toString() === foundThing.id.toString()
             })
           if(newFound === undefined){
-            favContainer.innerHTML += `<ul>${foundThing.title}<button id="button-unfave" data-id= ${foundThing.id} class= "em em-broken_heart"></button></ul>`
+            favContainer.innerHTML += `
+            <div class="ui segment">
+              <div data-content="popup">${foundThing.title} 
+                <button id="button-fave" data-id= ${foundThing.id} class= "em em-broken_heart"></button>
+              </div>
+              <p>Artist: ${foundThing.creator}</p>
+            </div>`
             app.user.things.push(foundThing)
             adapter.addThingsToUser(foundThing)
 
@@ -71,7 +78,13 @@ class Things {
 
           }
         }else{
-      this.favesContainer.innerHTML += `<ul>${foundThing.title}<button id="button-unfave" data-id= ${foundThing.id} class= "em em-broken_heart"></button></ul>`
+      this.favesContainer.innerHTML += `
+            <div class="ui segment">
+              <div data-content="popup">${foundThing.title} 
+                <button id="button-fave" data-id= ${foundThing.id} class= "em em-broken_heart"></button>
+              </div>
+              <p>Artist: ${foundThing.creator}</p>
+            </div>`
       // console.log("hello")
       app.user.things.push(foundThing)
       this.adapter.addThingsToUser(foundThing)
@@ -117,11 +130,30 @@ class Things {
     something.map(thing => {
     //console.log(this)
       if (thing.kind.includes("song")) {
-        this.songsNode.innerHTML += `<ul>${thing.title}<button id="button-fave" data-id= ${thing.id} class= "em em-heart"></button></ul>`
+        this.songsNode.innerHTML += `
+        <div class="ui segment">
+          <div data-content="popup">${thing.title} 
+            <button id="button-fave" data-id= ${thing.id} class= "em em-heart"></button>
+          </div>
+          <p>Artist: ${thing.creator}</p>
+        </div>`
+        
       } else if(thing.kind.includes("podcast")) {
-        this.podcastsNode.innerHTML += `<ul>${thing.title}<button id="button-fave" data-id= ${thing.id} class= "em em-heart"></button></ul>`
+        this.podcastsNode.innerHTML += `
+        <div class="ui segment">
+          <div data-content="popup">${thing.title} 
+            <button id="button-fave" data-id= ${thing.id} class= "em em-heart"></button>
+          </div>
+          <p>Artist: ${thing.creator}</p>
+        </div>`
       } else {
-        this.thingsNode.innerHTML += `<ul>${thing.title}<button id="button-fave" data-id= ${thing.id} class= "em em-heart"></button></ul>`
+        this.thingsNode.innerHTML += `
+        <div class="ui segment">
+          <div data-content="popup">${thing.title} 
+            <button id="button-fave" data-id= ${thing.id} class= "em em-heart"></button>
+          </div>
+          <p>Artist: ${thing.creator}</p>
+        </div>`
       }
     })
     // return a new string of HTML rendered to a certain point on the page
@@ -129,49 +161,14 @@ class Things {
   }
 
 
+
+
 }
 
+// `
+//         <li id= "listItem">${thing.title}<div data-content="This popup is very long but wont escape the segment it is placed in">${thing.title}</div>
+//           <p>${thing.kind}</p>
+//         </div>
+//         <button id="button-fave" data-id= ${thing.id} class= "em em-heart"></button></li>`
 
 
-
-
-  // handleAddThing() {
-  //   //console.log(this)
-  //   event.preventDefault()
-  //   const title = this.thingInput.value
-  //   this.adapter.createThing(title)
-  //   .then( (thingJSON) => this.things.push(new Thing(thingJSON)) )
-  //   .then(  this.render.bind(this) )
-  //   .then( () => this.thingInput.value = '' )
-  // }
-
-  // handleDeleteThing() {
-  //   if (event.target.dataset.action === 'delete-thing' && event.target.parentElement.classList.contains("thing-element")) {
-  //     const thingId = event.target.parentElement.dataset.thingid
-  //     this.adapter.deleteThing(thingId)
-  //     .then( resp => this.removeDeletedThing(resp) )
-  //   }
-  //   //console.log(this)
-  // }
-
-  // removeDeletedThing(deleteResponse) {
-  //   this.things = this.things.filter( thing => thing.id !== deleteResponse.thingId )
-  //   this.render()
-  //   //console.log(this)
-  // }
-
-  // thingsHTML() {
-  //   //console.log(this)
-  //   return this.things.map( thing => thing.render() ).join('')
-  // }
-
-  // render() {
-  //   this.thingsNode.innerHTML = `<ul>${this.thingsHTML()}</ul>`
-  // }
-
-//   alert("You already have that item saved to your favorites!")
-//   return "hello"
-// }else{
-//   favContainer.innerHTML += `<ul>${foundThing.title}<button id="button-unfave" data-id= ${foundThing.id} class= "em em-broken_heart"></button></ul>`
-//   app.user.things.push(foundThing)
-//   adapter.addThingsToUser(foundThing)

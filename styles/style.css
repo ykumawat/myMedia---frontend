@@ -26,3 +26,13 @@ ul {
 .delete-note-link {
   color:red;
 }
+
+/*li:hover {
+  color:blue;
+}*/
+
+$('.boundary.example .button')
+  .popup({
+    boundary: '.boundary.example .segment'
+  })
+;

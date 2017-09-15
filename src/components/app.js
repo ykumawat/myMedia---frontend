@@ -47,7 +47,13 @@ class App {
     let favesContainer = document.getElementById('favez-container')
 
     userThingsArr.forEach(function(instance){
-      favesContainer.innerHTML += `<ul>${instance.title}<button id="button-unfave" data-id= ${instance.id} class= "em em-broken_heart"></button></ul>`
+      favesContainer.innerHTML += `
+            <div class="ui segment">
+              <div data-content="popup">${foundThing.title} 
+                <button id="button-fave" data-id= ${foundThing.id} class= "em em-broken_heart"></button>
+              </div>
+              <p>Artist: ${foundThing.creator}</p>
+            </div>`
     })
     // const template =
     // this.favesContainer.innerHTML += `<ul>${foundThing.title}<button id="button-unfave" data-id= ${foundThing.id} class= "em em-broken_heart"></button></ul>`
