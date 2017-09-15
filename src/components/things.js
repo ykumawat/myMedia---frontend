@@ -27,6 +27,7 @@ class Things {
     this.favesContainer = document.getElementById('favez-container')
     this.songsHeading = document.getElementById('heading-songs')
     this.podcastsHeading = document.getElementById('heading-podcasts')
+    this.favezHeading = document.getElementById('favez-heading')
     this.omegaContainer = document.getElementById('omega-container')
     //this.thingsForm.addEventListener('submit',this.handleAddThing.bind(this))
     //this.thingsNode.addEventListener('click',this.handleDeleteThing.bind(this))
@@ -47,8 +48,6 @@ class Things {
     console.log(event)
   }
 
-
-
   addToFaves() {
     var foundThing
     var favContainer = this.favesContainer
@@ -65,10 +64,11 @@ class Things {
           if(newFound === undefined){
             favContainer.innerHTML += `
             <div class="ui segment">
-              <div data-content="popup">${foundThing.title} 
+              <div data-content="popup">${foundThing.title}
                 <button id="button-fave" data-id= ${foundThing.id} class= "em em-broken_heart"></button>
               </div>
-              <p>Artist: ${foundThing.creator}</p>
+              <p>Artist: ${foundThing.creator}<br>Genre: ${foundThing.genre}</p>
+              <p></p>
             </div>`
             app.user.things.push(foundThing)
             adapter.addThingsToUser(foundThing)
@@ -80,10 +80,11 @@ class Things {
         }else{
       this.favesContainer.innerHTML += `
             <div class="ui segment">
-              <div data-content="popup">${foundThing.title} 
+              <div data-content="popup">${foundThing.title}
                 <button id="button-fave" data-id= ${foundThing.id} class= "em em-broken_heart"></button>
               </div>
-              <p>Artist: ${foundThing.creator}</p>
+              <p>Artist: ${foundThing.creator}<br>Genre: ${foundThing.genre}</p>
+
             </div>`
       // console.log("hello")
       app.user.things.push(foundThing)
@@ -96,13 +97,17 @@ class Things {
   filterThings(){
     this.songsNode.innerHTML = ""
     this.podcastsNode.innerHTML = ""
+    this.favesContainer.innerHTML = ""
     if (event.target.value !== "") {
       this.songsHeading.innerHTML = "Songs"
       this.podcastsHeading.innerHTML = "Podcasts"
+
     } else {
       this.songsHeading.innerHTML = ""
       this.podcastsHeading.innerHTML = ""
+      this.favezHeading.innerHTML = ""
     }
+
     const searchInput = event.target.value
     // console.log(this.things)
     //let foundArr = []
@@ -117,7 +122,6 @@ class Things {
     }
 
   fetchAndLoadThings() {
-
     this.adapter.getThings()
     .then( thingsJSON => thingsJSON.forEach( thing => this.things.push( new Thing(thing) )))
       // .then( this.render.bind(this) )
@@ -132,16 +136,16 @@ class Things {
       if (thing.kind.includes("song")) {
         this.songsNode.innerHTML += `
         <div class="ui segment">
-          <div data-content="popup">${thing.title} 
+          <div data-content="popup">${thing.title}
             <button id="button-fave" data-id= ${thing.id} class= "em em-heart"></button>
           </div>
-          <p>Artist: ${thing.creator}</p>
+          <p>Artist: ${thing.creator}<br>Genre: ${thing.genre}</p>
         </div>`
-        
+
       } else if(thing.kind.includes("podcast")) {
         this.podcastsNode.innerHTML += `
         <div class="ui segment">
-          <div data-content="popup">${thing.title} 
+          <div data-content="popup">${thing.title}
             <button id="button-fave" data-id= ${thing.id} class= "em em-heart"></button>
           </div>
           <p>Artist: ${thing.creator}</p>
@@ -149,19 +153,16 @@ class Things {
       } else {
         this.thingsNode.innerHTML += `
         <div class="ui segment">
-          <div data-content="popup">${thing.title} 
+          <div data-content="popup">${thing.title}
             <button id="button-fave" data-id= ${thing.id} class= "em em-heart"></button>
           </div>
-          <p>Artist: ${thing.creator}</p>
+          <p>Artist: ${thing.creator}<br>Genre: ${thing.genre}</p>
         </div>`
       }
     })
     // return a new string of HTML rendered to a certain point on the page
 
   }
-
-
-
 
 }
 
@@ -170,5 +171,3 @@ class Things {
 //           <p>${thing.kind}</p>
 //         </div>
 //         <button id="button-fave" data-id= ${thing.id} class= "em em-heart"></button></li>`
-
-
