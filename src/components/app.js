@@ -9,6 +9,7 @@ class App {
   initBindingsAndEventListeners() {
     this.loginForm = document.getElementById('user-login')
     this.loginInput = document.getElementById('user-name')
+    this.favesContainer = document.getElementById('favez-container')
     this.loginForm.addEventListener('submit', this.fetchAndLoadUser.bind(this))
   }
 
@@ -31,9 +32,23 @@ class App {
       alert ("Sorry, we couldn't find you in our database. We'll make a new user profile now!")
     } else {
       alert(`Welcome, ${this.user.name}!`)
+      //put in function that loads all of that users things into favs container.
+      this.addUsersThingsToFavs()
     }
     // see if the username exists in the database, if not, alert user and create new user in database
 
+  }
+
+  addUsersThingsToFavs(){
+    console.log(this.user.things)
+    let userThingsArr = this.user.things
+    let favesContainer = document.getElementById('favez-container')
+
+    userThingsArr.forEach(function(instance){
+      favesContainer.innerHTML += `<ul>${instance.title}<button id="button-unfave" data-id= ${instance.id} class= "em em-broken_heart"></button></ul>`
+    })
+    // const template =
+    // this.favesContainer.innerHTML += `<ul>${foundThing.title}<button id="button-unfave" data-id= ${foundThing.id} class= "em em-broken_heart"></button></ul>`
   }
 
 }
