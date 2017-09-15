@@ -25,9 +25,10 @@ class Things {
     this.allMediaDIv = document.getElementById('all-media')
     this.addFavButton = document.getElementById('button-fave')
     this.favesContainer = document.getElementById('favez-container')
+    this.songsHeading = document.getElementById('heading-songs')
+    this.podcastsHeading = document.getElementById('heading-podcasts')
     //this.thingsForm.addEventListener('submit',this.handleAddThing.bind(this))
     //this.thingsNode.addEventListener('click',this.handleDeleteThing.bind(this))
-
     this.allMediaDIv.addEventListener('click', this.addToFaves.bind(this))
     // this.favesContainer.addEventListener('click', this.deleteFromFaves.bind(this))
     this.thingInput.addEventListener('keyup', this.filterThings.bind(this))
@@ -82,6 +83,13 @@ class Things {
   filterThings(){
     this.songsNode.innerHTML = ""
     this.podcastsNode.innerHTML = ""
+    if (event.target.value !== "") {
+      this.songsHeading.innerHTML = "Songs"
+      this.podcastsHeading.innerHTML = "Podcasts"
+    } else {
+      this.songsHeading.innerHTML = ""
+      this.podcastsHeading.innerHTML = ""
+    }
     const searchInput = event.target.value
     // console.log(this.things)
     //let foundArr = []
